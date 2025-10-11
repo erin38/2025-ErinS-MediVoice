@@ -9,4 +9,12 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-{@render children?.()}
+<div class="h-screen bg-gray-300 flex flex-col">
+	<main class="flex-grow">
+		{@render children?.()}
+	</main>
+	<nav class="bg-gray-500 p-5 flex justify-around">
+		<a href="/">HOME</a>
+		<a href="/about">ABOUT</a>
+	</nav>
+</div>
