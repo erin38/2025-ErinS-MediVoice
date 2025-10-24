@@ -1,184 +1,141 @@
-<div class="my-3 flex w-screen flex-col items-center space-y-3">
-	<div class="s1">Emergency Contacts</div>
+<div class="my-3 flex w-screen flex-col items-center space-y-4 p-4">
+	<h1 class="page-title">Emergency Contacts</h1>
 
-	<div class="b2">
-		<div class="icon1"></div>
-
-		<div>
-			<div class="name">Jalene</div>
-			<div class="rel">Sister</div>
+	<div class="contacts-container">
+		<div class="contact-card">
+			<div class="contact-header">
+				<div class="contact-icon">👤</div>
+				<div class="contact-info">
+					<div class="contact-name">Jalene</div>
+					<div class="contact-rel">Sister</div>
+				</div>
+			</div>
+			<div class="contact-phone">📞 949-918-3525</div>
 		</div>
 
-		<div class="t3">
-			<div></div>
-			<div class="pho">949-918-3525</div>
+		<div class="contact-card">
+			<div class="contact-header">
+				<div class="contact-icon">👤</div>
+				<div class="contact-info">
+					<div class="contact-name">June</div>
+					<div class="contact-rel">Brother</div>
+				</div>
+			</div>
+			<div class="contact-phone">📞 949-452-0585</div>
 		</div>
 
-		<div class="icon2"></div>
-	</div>
-
-	<div class="b2">
-		<div class="icon1"></div>
-
-		<div>
-			<div class="name">June</div>
-			<div class="rel">Brother</div>
+		<div class="contact-card">
+			<div class="contact-header">
+				<div class="contact-icon">👤</div>
+				<div class="contact-info">
+					<div class="contact-name">Liz</div>
+					<div class="contact-rel">Friend</div>
+				</div>
+			</div>
+			<div class="contact-phone">📞 949-154-2380</div>
 		</div>
 
-		<div class="t3">
-			<div></div>
-			<div class="pho">949-452-0585</div>
+		<div class="contact-card">
+			<div class="contact-header">
+				<div class="contact-icon">👤</div>
+				<div class="contact-info">
+					<div class="contact-name">Inwon</div>
+					<div class="contact-rel">Dad</div>
+				</div>
+			</div>
+			<div class="contact-phone">📞 949-560-2846</div>
 		</div>
 
-		<div class="icon2"></div>
-	</div>
-
-	<div class="b2">
-		<div class="icon1"></div>
-
-		<div>
-			<div class="name">Liz</div>
-			<div class="rel">Friend</div>
+		<div class="contact-card">
+			<div class="contact-header">
+				<div class="contact-icon">👤</div>
+				<div class="contact-info">
+					<div class="contact-name">Helena</div>
+					<div class="contact-rel">Mom</div>
+				</div>
+			</div>
+			<div class="contact-phone">📞 949-546-1927</div>
 		</div>
-
-		<div class="t3">
-			<div></div>
-			<div class="pho">949-154-2380</div>
-		</div>
-
-		<div class="icon2"></div>
-	</div>
-
-	<div class="b2">
-		<div class="icon1"></div>
-
-		<div>
-			<div class="name">Inwon</div>
-			<div class="rel">Dad</div>
-		</div>
-
-		<div class="t3">
-			<div></div>
-			<div class="pho">949-560-2846</div>
-		</div>
-
-		<div class="icon2"></div>
-	</div>
-
-	<div class="b2">
-		<div class="icon1"></div>
-
-		<div>
-			<div class="name">Helena</div>
-			<div class="rel">Mom</div>
-		</div>
-
-		<div class="t3">
-			<div></div>
-			<div class="pho">949-546-1927</div>
-		</div>
-
-		<div class="icon2"></div>
 	</div>
 </div>
 
 <style>
 	@import url(https://fonts.googleapis.com/css?family=Dancing+Script);
 
-	.s1 {
+	.page-title {
 		font-size: 30px;
 		font-family: 'Dancing Script';
-		padding: 10px;
 		color: steelblue;
+		margin-bottom: 10px;
 	}
 
-	.t {
-		display: grid;
-		grid-template-columns: 50px 1fr;
+	.contacts-container {
+		width: 100%;
+		max-width: 400px;
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
 	}
 
-	.t2 {
-		display: grid;
-		grid-template-columns: 26% 28% 46%;
+	.contact-card {
+		background: linear-gradient(135deg, #add8e6 0%, #87ceeb 100%);
+		border: 3px solid white;
+		border-radius: 25px;
+		padding: 18px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		transition: all 0.2s ease;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
 	}
 
-	.t3 {
-		display: grid;
-		grid-template-rows: 55% 60%;
+	.contact-card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 	}
 
-	.b1 {
-		height: 40px;
-		width: 300px;
-		padding: 15px;
-		display: grid;
-		grid-template-rows: 60% 40%;
-		grid-template-columns: 80% 20%;
-		background-color: lightblue;
-		border: 4px solid white;
-		border-radius: 20px;
+	.contact-header {
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		padding-bottom: 10px;
+		border-bottom: 2px dashed white;
 	}
 
-	.b2 {
-		height: 90px;
-		width: 300px;
-		padding: 15px;
-		display: grid;
-		grid-template-rows: 100% 0%;
-		grid-template-columns: 17% 25% 45% 1%;
-		background-color: rgb(173, 216, 230);
-		border: 2.5px solid white;
-		border-radius: 20px;
-		margin-bottom: 15px;
+	.contact-icon {
+		font-size: 40px;
+		filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
 	}
 
-	.name {
-		font-size: 21px;
-		padding: 5px;
-		margin-bottom: 7px;
+	.contact-info {
+		flex: 1;
+	}
+
+	.contact-name {
+		font-size: 24px;
+		font-weight: bold;
 		color: white;
-		margin-left: -10px;
+		text-shadow: 1px 1px 2px rgba(70, 130, 180, 0.5);
 	}
 
-	.icon1 {
-		width: 35px;
-		height: 35px;
-		border-radius: 40px;
-		border: 2px lightblue;
-		background-image: url('https://i.pinimg.com/236x/ff/be/5a/ffbe5acba5f705934c3abc4b2d377ee6.jpg');
-		background-size: cover;
-		background-position: center;
-		margin-top: 10px;
+	.contact-rel {
+		font-size: 16px;
+		color: steelblue;
+		font-weight: 600;
 	}
 
-	.icon2 {
-		width: 35px;
-		height: 25px;
-		border-radius: 50px;
-		border: 2px solid white;
-		background-image: url('https://i.pinimg.com/736x/b2/03/76/b203769b394777666e5187e26d5be465.jpg');
-		background-size: cover;
-		background-position: center;
-		margin-top: 8px;
-	}
-
-	.rel {
-		font-size: 18px;
-		margin-top: -18px;
-		margin-left: -5px;
-		color: navy;
-	}
-
-	.pho {
-		width: 130px;
-		padding: 3px;
+	.contact-phone {
+		background-color: rgba(255, 255, 255, 0.4);
 		border: 2px solid steelblue;
 		border-radius: 15px;
+		padding: 10px 15px;
 		text-align: center;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 		color: steelblue;
-		margin-top: 6px;
+		font-size: 16px;
+		font-weight: 600;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
 	}
 </style>

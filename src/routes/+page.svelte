@@ -1,49 +1,196 @@
 <script>
 	import Box1 from '../components/box1.svelte';
 	import Calendar from '../components/calendar.svelte';
+	import { medications, getMedicationsForDay } from '$lib/medicationData.js';
+	import { onMount } from 'svelte';
+
+	// State for selected date (default to today)
+	let selectedDate = $state(new Date());
+
+	// Track completion status of each medication
+	let medicationCompletionStatus = $state({});
+
+	// Completed dates from localStorage
+	let completedDates = $state([]);
+
+	// Load completed dates from localStorage
+	onMount(() => {
+		const stored = localStorage.getItem('completedMedicationDates');
+		if (stored) {
+			completedDates = JSON.parse(stored);
+		}
+	});
+
+	// Get day name from date
+	function getDayName(date) {
+		const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+		return days[date.getDay()];
+	}
+
+	// Format date for display
+	function formatDate(date) {
+		const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+		const months = [
+			'Jan',
+			'Feb',
+			'Mar',
+			'Apr',
+			'May',
+			'Jun',
+			'Jul',
+			'Aug',
+			'Sep',
+			'Oct',
+			'Nov',
+			'Dec'
+		];
+		return `${days[date.getDay()]} ${months[date.getMonth()]} ${date.getDate()}`;
+	}
+
+	// Format date as YYYY-MM-DD for storage
+	function formatDateForStorage(date) {
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const day = String(date.getDate()).padStart(2, '0');
+		return `${year}-${month}-${day}`;
+	}
+
+	// Handler for date selection
+	function handleDateSelect(newDate) {
+		selectedDate = newDate;
+		// Reset completion status when changing dates
+		medicationCompletionStatus = {};
+	}
+
+	// Handle medication completion change
+	function handleMedicationCompletion(medId, isComplete) {
+		medicationCompletionStatus[medId] = isComplete;
+	}
+
+	// Get medications for selected day
+	let dayName = $derived(getDayName(selectedDate));
+	let todaysMedications = $derived(getMedicationsForDay(dayName));
+	let sortedMedications = $derived(
+		todaysMedications.sort((a, b) => {
+			const timeA = a.times[0];
+			const timeB = b.times[0];
+			return timeA.localeCompare(timeB);
+		})
+	);
+
+	// Check if all medications are completed
+	let allMedicationsComplete = $derived(
+		sortedMedications.length > 0 &&
+			sortedMedications.every((med) => medicationCompletionStatus[med.id] === true)
+	);
+
+	// Watch for completion and update localStorage
+	$effect(() => {
+		if (allMedicationsComplete) {
+			const dateStr = formatDateForStorage(selectedDate);
+			if (!completedDates.includes(dateStr)) {
+				completedDates = [...completedDates, dateStr];
+				localStorage.setItem('completedMedicationDates', JSON.stringify(completedDates));
+			}
+		}
+	});
 </script>
 
 <div class="container mx-auto my-3 flex w-screen flex-col items-center space-y-3 p-4">
-	<h1>Thu Oct 23</h1>
-	<Calendar />
-	<Box1 name="Tyrenol" amt="2 tablets" time="8:00 AM" />
-	<Box1 name="Vitamin" amt="3 tablets" time="2:00 PM" />
-	<Box1 name="Bio" amt="2 tspoons" time="6:00 PM" />
-	<Box1 name="Tyrenol" amt="2 tablets" time="8:00 AM" />
-	<Box1 name="Vitamin" amt="3 tablets" time="2:00 PM" />
-	<Box1 name="Bio" amt="2 tspoons" time="6:00 PM" />
+	<h1 class="text-steelblue text-2xl font-bold">{formatDate(selectedDate)}</h1>
 
-	<div class="m-4 p-4">🎉 Congratulations, you have no more medications to take today</div>
+	<Calendar {selectedDate} {completedDates} onDateSelect={handleDateSelect} />
 
-	<div class="b2">
-		<div class="sbb1">
-			<div class="icon2"></div>
-			<div class="title2">Pill Schedule</div>
+	{#if allMedicationsComplete}
+		<div class="completion-celebration">
+			🎉 Congratulations! All medications taken for today! 🎉
 		</div>
-		<div class="pimage"></div>
-	</div>
+	{/if}
 
-	<div class="b3">
-		<div class="bb3">
-			<div class="title3">Tracked</div>
-			<div class="timage"></div>
-			<div class="bb32">
-				<a class="pimage2" href="/history"></a>
+	<div class="medications-section w-full max-w-md">
+		<h2 class="text-steelblue mb-4 text-center text-xl font-semibold">
+			Today's Medications ({sortedMedications.length})
+		</h2>
+
+		{#if sortedMedications.length === 0}
+			<div class="empty-state">🎉 No medications scheduled for this day</div>
+		{:else}
+			<div class="medications-list">
+				{#each sortedMedications as medication (medication.id)}
+					<Box1 {medication} onCompletionChange={handleMedicationCompletion} />
+				{/each}
 			</div>
-		</div>
-		<div class="sb4">
-			<div class="title4">Missed</div>
-			<div class="texti">2 pills (yesterday)</div>
-			<div class="sb5">
-				<div class="wicon"></div>
-				<a class="micon" href="/history"></a>
-			</div>
-		</div>
+		{/if}
 	</div>
 </div>
 
 <style>
 	@import url(https://fonts.googleapis.com/css?family=Dancing+Script);
+
+	.completion-celebration {
+		width: 100%;
+		max-width: 420px;
+		margin: 10px 0;
+		padding: 25px 20px;
+		background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+		border: 4px solid white;
+		border-radius: 25px;
+		text-align: center;
+		color: white;
+		font-size: 20px;
+		font-weight: 700;
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+		animation: celebratePulse 2s ease-in-out infinite;
+	}
+
+	@keyframes celebratePulse {
+		0%,
+		100% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(1.05);
+		}
+	}
+
+	.medications-section {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		width: 100%;
+		max-width: 420px;
+	}
+
+	.medications-list {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		align-items: center;
+	}
+
+	.empty-state {
+		margin: 20px;
+		padding: 30px 20px;
+		background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+		border-radius: 20px;
+		text-align: center;
+		color: #2d3748;
+		font-size: 18px;
+		font-weight: 600;
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	.encouragement-message {
+		margin: 20px;
+		padding: 20px;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		border-radius: 15px;
+		text-align: center;
+		color: white;
+		font-size: 16px;
+		font-weight: 600;
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	}
 
 	.s1 {
 		font-size: 30px;
