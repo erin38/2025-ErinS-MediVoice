@@ -65,7 +65,7 @@
 	.med-card {
 		width: 100%;
 		max-width: 320px;
-		background: linear-gradient(135deg, #add8e6 0%, #87ceeb 100%);
+		background: #87ceeb;
 		border: 3px solid white;
 		border-radius: 25px;
 		padding: 18px;

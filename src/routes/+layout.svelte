@@ -10,6 +10,9 @@
 </svelte:head>
 
 <div class="flex h-screen flex-col bg-blue-100">
+	<header class="app-header">
+		<h1 class="app-title">MediVoice</h1>
+	</header>
 	<main class="flex-grow overflow-y-auto">
 		{@render children?.()}
 	</main>
@@ -30,10 +33,27 @@
 </div>
 
 <style>
+	.app-header {
+		background: #87ceeb;
+		padding: 20px;
+		text-align: center;
+		border-bottom: 3px solid white;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.app-title {
+		margin: 0;
+		font-size: 32px;
+		font-weight: bold;
+		color: white;
+		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+		letter-spacing: 1px;
+	}
+
 	.navigation-bar {
 		display: flex;
 		justify-content: space-around;
-		background: linear-gradient(180deg, #87ceeb 0%, #add8e6 100%);
+		background: #87ceeb;
 		padding: 12px 10px;
 		border-top: 3px solid white;
 		box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);

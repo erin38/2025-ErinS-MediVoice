@@ -132,14 +132,9 @@
 		max-width: 420px;
 		margin: 10px 0;
 		padding: 25px 20px;
-		background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
-		border: 4px solid white;
-		border-radius: 25px;
 		text-align: center;
-		color: white;
 		font-size: 20px;
 		font-weight: 700;
-		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 		animation: celebratePulse 2s ease-in-out infinite;
 	}
 

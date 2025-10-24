@@ -93,9 +93,9 @@
 
 <div class="calendar-container">
 	<div class="calendar-header">
-		<button onclick={() => navigateMonth('prev')} class="nav-button">‹</button>
+		<button onclick={() => navigateMonth('prev')} class="nav-button">Prev</button>
 		<div class="month-year">{monthNames[currentMonth]} {currentYear}</div>
-		<button onclick={() => navigateMonth('next')} class="nav-button">›</button>
+		<button onclick={() => navigateMonth('next')} class="nav-button">Next</button>
 	</div>
 
 	<div class="grid grid-cols-7 gap-1">
@@ -120,9 +120,6 @@
 				onclick={() => handleDateClick(day)}
 			>
 				<span class="day-number">{day}</span>
-				{#if isCompletedDate(day)}
-					<span class="completion-badge">✓</span>
-				{/if}
 			</button>
 		{/each}
 	</div>
@@ -154,16 +151,16 @@
 	.nav-button {
 		background-color: lightblue;
 		border: 2px solid steelblue;
-		border-radius: 50%;
-		width: 35px;
+		border-radius: 10%;
 		height: 35px;
-		font-size: 24px;
+		font-size: 14px;
 		color: steelblue;
 		cursor: pointer;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		transition: all 0.2s;
+		padding: 0 10px;
 	}
 
 	.nav-button:hover {
@@ -185,7 +182,6 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		border: 2px solid lightblue;
 		border-radius: 8px;
 		cursor: pointer;
 		background-color: white;
