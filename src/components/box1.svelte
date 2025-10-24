@@ -1,45 +1,28 @@
 <script>
-	import Box1 from '../components/box1.svelte';
-	import Calendar from '../components/calendar.svelte';
+	let { name, amt, time } = $props();
+	let taken = $state(false);
 </script>
 
-<div class="container mx-auto my-3 flex w-screen flex-col items-center space-y-3 p-4">
-	<h1>Thu Oct 23</h1>
-	<Calendar />
-	<Box1 name="Tyrenol" amt="2 tablets" time="8:00 AM" />
-	<Box1 name="Vitamin" amt="3 tablets" time="2:00 PM" />
-	<Box1 name="Bio" amt="2 tspoons" time="6:00 PM" />
-	<Box1 name="Tyrenol" amt="2 tablets" time="8:00 AM" />
-	<Box1 name="Vitamin" amt="3 tablets" time="2:00 PM" />
-	<Box1 name="Bio" amt="2 tspoons" time="6:00 PM" />
-
-	<div class="m-4 p-4">🎉 Congratulations, you have no more medications to take today</div>
-
-	<div class="b2">
-		<div class="sbb1">
-			<div class="icon2"></div>
-			<div class="title2">Pill Schedule</div>
-		</div>
-		<div class="pimage"></div>
+<div
+	class="b1 duration-2000"
+	class:py-5={!taken}
+	class:bg-blue-300={!taken}
+	class:bg-gray-300={taken}
+>
+	<div class="sb1">
+		<div class="icon"></div>
+		<div class="title">{name}</div>
+		<div class="ticon">({time})</div>
 	</div>
 
-	<div class="b3">
-		<div class="bb3">
-			<div class="title3">Tracked</div>
-			<div class="timage"></div>
-			<div class="bb32">
-				<a class="pimage2" href="/history"></a>
-			</div>
-		</div>
-		<div class="sb4">
-			<div class="title4">Missed</div>
-			<div class="texti">2 pills (yesterday)</div>
-			<div class="sb5">
-				<div class="wicon"></div>
-				<a class="micon" href="/history"></a>
-			</div>
-		</div>
-	</div>
+	<button
+		class="pill flex cursor-pointer items-center justify-center p-2"
+		class:bg-orange-300={taken}
+		onclick={() => (taken = !taken)}
+	>
+		{taken ? '✅' : ''}
+		{amt}
+	</button>
 </div>
 
 <style>
@@ -47,39 +30,31 @@
 
 	.s1 {
 		font-size: 30px;
-		padding: 10px;
 		font-family: 'Dancing Script';
-		color: steelblue;
 	}
 
 	.sb1 {
 		display: flex;
+		align-items: center;
 	}
 	.sb2 {
-		width: 300px;
-		height: 50px;
 		display: flex;
 		justify-content: space-evenly;
 		align-items: space-between;
 	}
 
 	.sb3 {
-		width: 300px;
 		display: flex;
 		justify-content: space-around;
 	}
 
 	.b1 {
-		width: 300px;
-		height: 220px;
-		background-color: white;
 		text-align: center;
 		color: white;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		background-color: lightblue;
 		border: 3px solid white;
 		border-radius: 30px;
 	}
